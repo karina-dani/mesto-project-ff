@@ -1,12 +1,12 @@
 
 //функция удаления карточки
-export function deleteCard(evt) {
-  evt.target.closest('.places__item').remove();
+export function deleteCard(cardElement) {
+  cardElement.remove();
 }
 
 //функция лайка карточки
-export function likeCard(evt) {
-    evt.target.classList.toggle('card__like-button_is-active');
+export function likeCard(likeButton) {
+   likeButton.classList.toggle('card__like-button_is-active');
 }
 
 //функция вывода карточки и всех операций с ней
@@ -18,16 +18,23 @@ export function createCard(element, clickImage, likeCard, deleteCard) {
   const cardTitle = cardElement.querySelector('.card__title');
   const likeButton = cardElement.querySelector('.card__like-button');
 
+  const modalImage = document.querySelector('.popup__image');
+  const modalCaption = document.querySelector('.popup__caption');
 
   cardImage.src = element.link;
   cardImage.alt = element.name;
   cardTitle.textContent = element.name;
 
-  cardImage.addEventListener('click', clickImage);
+  cardImage.addEventListener('click', () => {
+    clickImage();
+    modalImage.src = cardImage.src;
+    modalImage.alt = cardImage.alt;
+    modalCaption.textContent = cardImage.alt;
+  });
 
-  likeButton.addEventListener('click', likeCard); 
+  likeButton.addEventListener('click', () => likeCard(likeButton)); 
 
-  deleteButton.addEventListener('click', deleteCard);
+  deleteButton.addEventListener('click', () => deleteCard(cardElement));
 
   return cardElement;
 }

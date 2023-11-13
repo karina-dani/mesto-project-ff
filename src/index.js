@@ -5,33 +5,37 @@
 import './pages/index.css'; 
 import {initialCards} from './scripts/cards.js';
 import {createCard, likeCard, deleteCard} from './components/card.js';
-import {closeModalEvents, closeModal, openModal} from './components/modal.js';
+import {closeModalWithEsc, closeModalOnClick, closeModal, openModal} from './components/modal.js';
 
 //контейнер с карточками
 const placesList = document.querySelector('.places__list');
 
+//попапы
+const Modal = document.querySelectorAll('.popup');
+
 //попап редактирование профиля
-const editModal = document.querySelector('.popup_type_edit');
-const editButton = document.querySelector('.profile__edit-button');
+const editProfileModal = document.querySelector('.popup_type_edit');
+const editProfileButton = document.querySelector('.profile__edit-button');
 
 //попап новая карточка
-const addButton = document.querySelector('.profile__add-button');
 const newCardModal = document.querySelector('.popup_type_new-card');
+const addCardButton = document.querySelector('.profile__add-button');
 
 //попап увеличенная картинка
-const imageModal = document.querySelector('.popup_type_image');
-const image = document.querySelector('.popup__image');
-const caption = document.querySelector('.popup__caption');
+const cardImageModal = document.querySelector('.popup_type_image');
 
-//переменные формы
-const formElement = document.querySelector('form[name="edit-profile"]');
+//переменные форм
+const editProfileForm = document.querySelector('form[name="edit-profile"]');
 const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 
 const profileName = document.querySelector('.profile__title');
 const profileJob = document.querySelector('.profile__description');
 
-const addingForm = document.querySelector('form[name="new-place"]');
+const addCardForm = document.querySelector('form[name="new-place"]');
+
+const placeName = document.querySelector('.popup__input_type_card-name');
+const placeUrl = document.querySelector('.popup__input_type_url');
 
 // вывод карточек на страницу 
 initialCards.forEach(function (element) {
@@ -39,45 +43,44 @@ initialCards.forEach(function (element) {
   placesList.append(card);
 });
 
+// слушатель для закрытия попапов по клику
+Modal.forEach(function (element){
+ element.addEventListener('click', closeModalOnClick);
+});
+
 // слушатель для попапа редактирования профиля
-editButton.addEventListener('click', function () {
-  openModal(editModal);
+editProfileButton.addEventListener('click', function () {
+  openModal(editProfileModal);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
 // слушатель для попапа добавления картинки
-addButton.addEventListener('click', function () {
+addCardButton.addEventListener('click', function () {
   openModal(newCardModal);
 }); 
 
 // функция клика по картинке карточки
-function clickImage (evt) {
-  openModal(imageModal);
-  image.src = evt.target.src;
-  caption.textContent = evt.target.alt;
-}
+function clickImage () {
+  openModal(cardImageModal);
+};
 
 // обработчик «отправки» формы
-function handleFormSubmit(evt) {
+function handleEditProfileFormSubmit(evt) {
   evt.preventDefault(); 
 
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
 
-  formElement.reset(); 
-  closeModal();
-}
+  editProfileForm.reset(); 
+  closeModal(editProfileModal);
+};
 
-formElement.addEventListener('submit', handleFormSubmit);
-
+editProfileForm.addEventListener('submit', handleEditProfileFormSubmit);
 
 // обработчик добавления картинки 
 function addCard(evt) {
   evt.preventDefault(); 
-
-  const placeName = document.querySelector('.popup__input_type_card-name');
-  const placeUrl = document.querySelector('.popup__input_type_url');
 
   const newCard = {
   name: placeName.value,
@@ -85,12 +88,11 @@ function addCard(evt) {
   };
 
   const addedCard = createCard(newCard, clickImage, likeCard, deleteCard);
-
   placesList.prepend(addedCard);
 
-  addingForm.reset(); 
-  closeModal() 
+  addCardForm.reset(); 
+  closeModal(newCardModal); 
 }
 
-addingForm.addEventListener('submit', addCard); 
+addCardForm.addEventListener('submit', addCard); 
 
