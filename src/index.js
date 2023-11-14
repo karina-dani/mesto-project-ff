@@ -11,7 +11,8 @@ import {closeModalWithEsc, closeModalOnClick, closeModal, openModal} from './com
 const placesList = document.querySelector('.places__list');
 
 //попапы
-const Modal = document.querySelectorAll('.popup');
+const modalList = document.querySelectorAll('.popup');
+
 
 //попап редактирование профиля
 const editProfileModal = document.querySelector('.popup_type_edit');
@@ -22,7 +23,8 @@ const newCardModal = document.querySelector('.popup_type_new-card');
 const addCardButton = document.querySelector('.profile__add-button');
 
 //попап увеличенная картинка
-const cardImageModal = document.querySelector('.popup_type_image');
+const modalImage = document.querySelector('.popup__image');
+const modalCaption = document.querySelector('.popup__caption');
 
 //переменные форм
 const editProfileForm = document.querySelector('form[name="edit-profile"]');
@@ -44,7 +46,7 @@ initialCards.forEach(function (element) {
 });
 
 // слушатель для закрытия попапов по клику
-Modal.forEach(function (element){
+modalList.forEach(function (element){
  element.addEventListener('click', closeModalOnClick);
 });
 
@@ -61,8 +63,11 @@ addCardButton.addEventListener('click', function () {
 }); 
 
 // функция клика по картинке карточки
-function clickImage () {
+function clickImage (cardImageModal, cardImage) {
   openModal(cardImageModal);
+  modalImage.src = cardImage.src;
+  modalImage.alt = cardImage.alt;
+  modalCaption.textContent = cardImage.alt;
 };
 
 // обработчик «отправки» формы

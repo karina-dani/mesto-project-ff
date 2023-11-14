@@ -17,20 +17,13 @@ export function createCard(element, clickImage, likeCard, deleteCard) {
   const cardImage = cardElement.querySelector('.card__image');
   const cardTitle = cardElement.querySelector('.card__title');
   const likeButton = cardElement.querySelector('.card__like-button');
-
-  const modalImage = document.querySelector('.popup__image');
-  const modalCaption = document.querySelector('.popup__caption');
+  const cardImageModal = document.querySelector('.popup_type_image');
 
   cardImage.src = element.link;
   cardImage.alt = element.name;
   cardTitle.textContent = element.name;
 
-  cardImage.addEventListener('click', () => {
-    clickImage();
-    modalImage.src = cardImage.src;
-    modalImage.alt = cardImage.alt;
-    modalCaption.textContent = cardImage.alt;
-  });
+  cardImage.addEventListener('click', () => clickImage(cardImageModal, cardImage));
 
   likeButton.addEventListener('click', () => likeCard(likeButton)); 
 

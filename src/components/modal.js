@@ -16,8 +16,7 @@ export function closeModalWithEsc (evt) {
 // функция закрытия попапа по клику
 export function closeModalOnClick (evt) {
   if (evt.target.closest('.popup__close') || evt.target === evt.currentTarget) {
-    const openedModal = document.querySelector('.popup_is-opened');
-    closeModal(openedModal); 
+    closeModal(evt.currentTarget); 
   }
 };
 
