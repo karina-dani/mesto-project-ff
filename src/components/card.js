@@ -22,11 +22,10 @@ export function createCard(element, clickImage, likeCard, handleDeleteModal, pro
   cardImage.addEventListener('click', () => clickImage(cardImageModal, cardImage));
 
 //добавляем в разметке лайк, если карточка была лайкнута пользователем 
-  cardLikes.forEach((like) => {
-    if(like._id === profileId) {
+  const isCardLikedByMe = cardLikes.some(like => like._id === profileId);
+    if(isCardLikedByMe) {
       likeButton.classList.add('card__like-button_is-active');
     }
-  })
 
   likeButton.addEventListener('click', () => likeCard(likeButton, likeCount, cardId)); 
 
