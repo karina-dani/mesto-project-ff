@@ -10,6 +10,7 @@ import {getUserInfo, getUserCards, editUserProfile, editUserProfileImage, addUse
 
 //контейнер с карточками
 const placesList = document.querySelector('.places__list');
+let cardId = '';
 
 //данные профиля
 const profileName = document.querySelector('.profile__title');
