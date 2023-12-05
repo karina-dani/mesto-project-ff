@@ -10,7 +10,6 @@ import {getUserInfo, getUserCards, editUserProfile, editUserProfileImage, addUse
 
 //контейнер с карточками
 const placesList = document.querySelector('.places__list');
-let cardId = '';
 
 //данные профиля
 const profileName = document.querySelector('.profile__title');
@@ -64,7 +63,6 @@ function renderUserInfo(info) {
   profileName.textContent = info.name;
   profileJob.textContent = info.about; 
   editProfileImageButton.setAttribute("style", `background-image: url(${info.avatar})`);
-  console.log(profileId);
 }
 
 //функция для вывода пользовательских карточек с сервера
@@ -78,8 +76,6 @@ function renderUserCards(cards) {
 //вывод актуальной инфо пользователя и карт на страницу
 const promiseAll = Promise.all([getUserInfo(), getUserCards()])
   .then((res) => {
-    console.log(res[1]);
-    console.log(res[0]);
   renderUserInfo(res[0]);
   renderUserCards(res[1]);
   })
@@ -193,8 +189,6 @@ function addCard(evt) {
 
 addCardForm.addEventListener('submit', addCard); 
 
-
-
 //функция получения cardId и открытия окна удаления
 function handleDeleteModal (cardId) {
   deleteCardForm.dataset.id = cardId;
@@ -241,7 +235,6 @@ function likeCard(likeButton, likeCount, cardId) {
       .then((res) => {
         likeCount.textContent = res.likes.length;
         likeButton.classList.toggle('card__like-button_is-active');
-        console.log(res);
       })
   }
 }
