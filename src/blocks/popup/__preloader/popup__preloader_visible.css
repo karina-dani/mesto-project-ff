@@ -1,0 +1,5 @@
+.popup__preloader_visible {
+  display: flex;
+  z-index: 15;
+  cursor: pointer;
+}
