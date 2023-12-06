@@ -26,7 +26,6 @@ export const getUserInfo = () => {
     headers: requestConfig.headers,
   })
     .then(renderServerReply)
-    .catch(renderError);
 };
 
 //функция для запроса пользовательских карточек на сервере
@@ -35,7 +34,6 @@ export const getUserCards = () => {
     headers: requestConfig.headers,
   })
     .then(renderServerReply)
-    .catch(renderError);
 };
 
 //функция для отправки нового логина и описания на сервер
@@ -49,7 +47,6 @@ export const editUserProfile = (nameInput, jobInput) => {
     }),
   })
     .then(renderServerReply)
-    .catch(renderError);
 };
 
 //смена аватара пользователя на сервере

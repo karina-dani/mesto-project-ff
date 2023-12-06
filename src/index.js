@@ -233,10 +233,12 @@ function handleDeleteCardSubmit(evt) {
   evt.preventDefault();
   cardId = deleteCardForm.dataset.id;
 
-  deleteUserCard(cardId).then(() => {
-    deleteCard(cardId);
-    closeModal(deleteCardModal);
-  });
+  deleteUserCard(cardId)
+    .then(() => {
+      deleteCard(cardId);
+      closeModal(deleteCardModal);
+    })
+    .catch(renderError);
 }
 
 deleteCardForm.addEventListener("submit", handleDeleteCardSubmit);
